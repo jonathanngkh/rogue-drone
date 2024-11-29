@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://klmy6w8lxao1"]
+
+[ext_resource type="PackedScene" uid="uid://cuhjk0ppis5lw" path="res://Drone/drone.tscn" id="1_8pc8o"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_daygf"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_crgep"]
+sky_material = SubResource("ProceduralSkyMaterial_daygf")
+
+[sub_resource type="Environment" id="Environment_c3jo3"]
+background_mode = 2
+sky = SubResource("Sky_crgep")
+tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_snua2"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lj1c0"]
+size = Vector3(60, 2, 60)
+
+[node name="Main" type="Node"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 21.5786, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_c3jo3")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_snua2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_lj1c0")
+
+[node name="Drone" parent="." instance=ExtResource("1_8pc8o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.89192, 0)
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.732472, 0.680798, 0, -0.680798, 0.732472, 0, 9.915, 24.9423)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+size = 10.0

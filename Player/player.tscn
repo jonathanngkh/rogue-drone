@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://devjvb2uve3x"]
+
+[ext_resource type="PackedScene" uid="uid://bfaosiliaeb4e" path="res://Player/player.glb" id="1_ap387"]
+
+[node name="Player" type="CharacterBody3D"]
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Character" parent="Pivot" instance=ExtResource("1_ap387")]
