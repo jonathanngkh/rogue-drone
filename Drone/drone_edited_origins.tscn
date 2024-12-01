@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://diqrec1hr4dkb"]
+[gd_scene load_steps=6 format=3 uid="uid://diqrec1hr4dkb"]
 
 [ext_resource type="PackedScene" uid="uid://dfpmnsfs3lykp" path="res://Drone/drone edited origins.glb" id="1_gsbay"]
 
@@ -53,72 +53,9 @@ tracks/3/keys = {
 "values": [Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_8bytx"]
-resource_name = "back_left_rotate"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("root/node_id273/node_id118/node_id205:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_5ox3p"]
-resource_name = "back_right_rotate"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("root/node_id273/node_id118/node_id199:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -6.28319, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_u32ol"]
-resource_name = "front_left_rotate"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("root/node_id273/node_id118/node_id211:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -6.28319, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_stowf"]
-resource_name = "front_right_rotate"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("root/node_id273/node_id118/node_id193:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_c75k7"]
 resource_name = "throttle_forward"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -168,14 +105,38 @@ tracks/3/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, -6.28319, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_jgxh4"]
+resource_name = "yaw_left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("root/node_id273/node_id118/node_id211:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -6.28319, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("root/node_id273/node_id118/node_id193:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 3.14159, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b8y64"]
 _data = {
 "RESET": SubResource("Animation_n8gc7"),
-"back_left_rotate": SubResource("Animation_8bytx"),
-"back_right_rotate": SubResource("Animation_5ox3p"),
-"front_left_rotate": SubResource("Animation_u32ol"),
-"front_right_rotate": SubResource("Animation_stowf"),
-"throttle_forward": SubResource("Animation_c75k7")
+"throttle_forward": SubResource("Animation_c75k7"),
+"yaw_left": SubResource("Animation_jgxh4")
 }
 
 [node name="drone edited origins" instance=ExtResource("1_gsbay")]
@@ -184,3 +145,4 @@ _data = {
 libraries = {
 "": SubResource("AnimationLibrary_b8y64")
 }
+speed_scale = 0.325
