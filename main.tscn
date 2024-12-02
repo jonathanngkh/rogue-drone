@@ -44,19 +44,12 @@ mesh = SubResource("BoxMesh_lj1c0")
 surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
 
 [node name="Drone" parent="." instance=ExtResource("1_8pc8o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.89192, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8059, 0)
 floor_block_on_wall = false
-max_thrust = 60.0
-drag_coefficient = 0.1
-angular_drag_coefficient = 0.1
-max_yaw_speed = 6.0
-max_pitch_speed = 3.0
-max_roll_speed = 3.0
-friction_coefficient = 10
 
 [node name="CameraPivot" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.732472, 0.680798, 0, -0.680798, 0.732472, 0, 9.915, 24.9423)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.998582, 0.0532247, 0, -0.0532247, 0.998582, 0.865623, 12.5141, -19.7857)
+transform = Transform3D(1, 0, 0, 0, 0.986942, 0.16107, 0, -0.16107, 0.986942, 0.865623, 10.5878, -12.2949)
 size = 10.0

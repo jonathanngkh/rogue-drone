@@ -1,7 +1,9 @@
 extends CharacterBody3D
 
 @onready var drone_animation_player: AnimationPlayer = $"Pivot/drone edited origins/DroneAnimationPlayer"
+@onready var bullet_scene: PackedScene = preload("res://Bullet/bullet.tscn") # Bullet scene
 
+@export var bullet_speed = 50.0 # Bullet speed
 @export var max_thrust = 60.0 # Maximum upward force (throttle)
 @export var drag_coefficient = 0.1 # Adjust this value to tune drag intensity
 @export var angular_drag_coefficient = 0.1 # Adjust this to tune angular drag intensity
@@ -17,13 +19,15 @@ var yaw_velocity: float = 0.0
 var roll_velocity: float = 0.0
 
 func _physics_process(delta: float) -> void:
+	# Handle shooting with R1 button (gamepad button)
+	if Input.is_action_just_pressed("shoot"):
+		shoot_bullet()
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		print("in air")
 	else:
 		apply_friction(delta)
-		print("on floor")
 		reset_orientation_to_neutral() # can use this for ez hover
 		
 	# Get throttle input (left stick Y-axis)
@@ -141,7 +145,18 @@ func reset_orientation_to_neutral() -> void: # but 'smoothly'
 
 	# Interpolate from the current rotation to the target rotation
 	var current_quaternion = transform.basis.get_rotation_quaternion()
-	var smooth_quat = current_quaternion.slerp(target_quaternion, 0.5) # Adjust 0.1 for smoothness
+	var smooth_quat = current_quaternion.slerp(target_quaternion, 0.2) # Adjust 0.1 for smoothness
 
 	# Apply the interpolated rotation
 	transform.basis = Basis(smooth_quat)
+
+func shoot_bullet() -> void:
+	# Instantiate the bullet
+	var bullet = bullet_scene.instantiate()
+
+	# Add the bullet to the scene and apply a force to shoot it forward
+	get_parent().add_child(bullet)
+	# Set the bullet's initial position and rotation to match the drone's current position and facing direction
+	bullet.global_transform.origin = transform.origin - transform.basis.z  # Position in front of the drone
+	#bullet.rotation_degrees = transform.basis.get_euler() # Match the drone's rotation
+	bullet.apply_impulse(-transform.basis.z * bullet_speed, Vector3.ZERO)
