@@ -45,6 +45,48 @@ shape = SubResource("BoxShape3D_snua2")
 mesh = SubResource("BoxMesh_lj1c0")
 surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
 
+[node name="MultiMeshInstance3D" parent="Ground" instance=ExtResource("2_r4yd5")]
+transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
+
+[node name="Ground2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.8243, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground2"]
+shape = SubResource("BoxShape3D_snua2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground2"]
+mesh = SubResource("BoxMesh_lj1c0")
+surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
+
+[node name="MultiMeshInstance3D" parent="Ground2" instance=ExtResource("2_r4yd5")]
+transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
+
+[node name="Ground3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 56.7928)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground3"]
+shape = SubResource("BoxShape3D_snua2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground3"]
+mesh = SubResource("BoxMesh_lj1c0")
+surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
+
+[node name="MultiMeshInstance3D" parent="Ground3" instance=ExtResource("2_r4yd5")]
+transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
+
+[node name="Ground4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.8243, -1, 56.7928)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground4"]
+shape = SubResource("BoxShape3D_snua2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground4"]
+mesh = SubResource("BoxMesh_lj1c0")
+surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
+
+[node name="MultiMeshInstance3D" parent="Ground4" instance=ExtResource("2_r4yd5")]
+transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
+
 [node name="Drone" parent="." instance=ExtResource("1_8pc8o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8059, 0)
 floor_block_on_wall = false
@@ -55,6 +97,3 @@ transform = Transform3D(1, 0, 0, 0, 0.732472, 0.680798, 0, -0.680798, 0.732472, 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.997549, 0.0699659, 0, -0.0699659, 0.997549, 0.865623, 2.2826, 7.48893)
 size = 10.0
-
-[node name="MultiMeshInstance3D" parent="." instance=ExtResource("2_r4yd5")]
-transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 1.6709, 0)
