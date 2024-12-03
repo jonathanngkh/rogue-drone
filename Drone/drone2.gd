@@ -157,6 +157,6 @@ func shoot_bullet() -> void:
 	# Add the bullet to the scene and apply a force to shoot it forward
 	get_parent().add_child(bullet)
 	# Set the bullet's initial position and rotation to match the drone's current position and facing direction
-	bullet.global_transform.origin = transform.origin - transform.basis.z  # Position in front of the drone
-	#bullet.rotation_degrees = transform.basis.get_euler() # Match the drone's rotation
+	bullet.global_transform.origin = transform.origin - 3*transform.basis.z  # Position in front of the drone
+	bullet.rotation_degrees = transform.basis.get_euler() # Match the drone's rotation
 	bullet.apply_impulse(-transform.basis.z * bullet_speed, Vector3.ZERO)

@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://diqrec1hr4dkb" path="res://Drone/drone_edited_origins.tscn" id="2_mm684"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_4gnq5"]
-height = 0.399075
-radius = 0.251259
+height = 0.15
+radius = 0.25
 
 [node name="Drone" type="CharacterBody3D"]
 script = ExtResource("1_wyx1r")
@@ -13,17 +13,17 @@ script = ExtResource("1_wyx1r")
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="drone edited origins" parent="Pivot" instance=ExtResource("2_mm684")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-10, 0, 1.50996e-06, 0, 10, 0, -1.50996e-06, 0, -10, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.342191, 0, 0, 0, 1, 0, 0.0610834, 0)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0.58576, 0)
 shape = SubResource("CylinderShape3D_4gnq5")
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.137798, 0.0156304)
 
 [node name="Camera3D" type="Camera3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 0.929879, -0.367865, 0, 0.367865, 0.929879, 0.000795484, 0.0131733, -0.0124043)
+transform = Transform3D(1, 0, 0, 0, 0.999961, -0.00883141, 0, 0.00883141, 0.999961, 0.000795484, 1.80606, -0.241343)
 current = true
 fov = 90.0
 
