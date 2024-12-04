@@ -23,7 +23,7 @@ shape = SubResource("CylinderShape3D_4gnq5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.137798, 0.0156304)
 
 [node name="Camera3D" type="Camera3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 0.999961, -0.00883141, 0, 0.00883141, 0.999961, 0.000795484, 1.80606, -0.241343)
+transform = Transform3D(1, 0, 0, 0, 0.984, -0.178167, 0, 0.178167, 0.984, 0.000795484, 1.80606, -0.241343)
 current = true
 fov = 90.0
 

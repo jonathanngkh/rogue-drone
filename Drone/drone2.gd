@@ -20,7 +20,7 @@ var roll_velocity: float = 0.0
 
 func _physics_process(delta: float) -> void:
 	# Handle shooting with R1 button (gamepad button)
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_pressed("shoot"):
 		shoot_bullet()
 
 	# Add the gravity.
@@ -159,4 +159,5 @@ func shoot_bullet() -> void:
 	# Set the bullet's initial position and rotation to match the drone's current position and facing direction
 	bullet.global_transform.origin = transform.origin - 3*transform.basis.z  # Position in front of the drone
 	bullet.rotation_degrees = transform.basis.get_euler() # Match the drone's rotation
-	bullet.apply_impulse(-transform.basis.z * bullet_speed, Vector3.ZERO)
+	bullet.apply_impulse(-transform.basis.z * bullet_speed + velocity, Vector3.ZERO)
+	

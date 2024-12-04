@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3vmxt3w4nf3c"]
+
+[ext_resource type="PackedScene" uid="uid://bi4ea2iodapgy" path="res://Assets/targetA.glb" id="1_73ff1"]
+[ext_resource type="Script" path="res://Bullseye/bullseye.gd" id="1_n0qxb"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fnxqb"]
+height = 0.771
+radius = 1.79
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xg43n"]
+lightmap_size_hint = Vector2i(56, 23)
+top_radius = 1.725
+bottom_radius = 1.725
+height = 0.52
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xfloo"]
+emission_enabled = true
+emission = Color(1.53056e-05, 0.880157, 7.70092e-07, 1)
+emission_energy_multiplier = 16.0
+
+[node name="Bullseye" type="RigidBody3D"]
+collision_layer = 3
+collision_mask = 3
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("1_n0qxb")
+
+[node name="TargetA2" parent="." instance=ExtResource("1_73ff1")]
+transform = Transform3D(-4.37114e-07, 0, -10, 0, 10, 0, 10, 0, -4.37114e-07, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_fnxqb")
+
+[node name="GreenIndicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
+mesh = SubResource("CylinderMesh_xg43n")
+surface_material_override/0 = SubResource("StandardMaterial3D_xfloo")
