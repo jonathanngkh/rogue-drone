@@ -1,10 +1,9 @@
-[gd_resource type="Sky" load_steps=2 format=3 uid="uid://b5d0f7g6xkjqy"]
+[gd_resource type="Sky" load_steps=3 format=3 uid="uid://b5d0f7g6xkjqy"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_v6c48"]
-sky_top_color = Color(0.00994583, 0.47725, 0.712982, 1)
-sky_horizon_color = Color(1, 0.454017, 0.518707, 1)
-ground_bottom_color = Color(0, 0.11453, 0.202976, 1)
-ground_horizon_color = Color(0.840514, 0.581612, 0.515809, 1)
+[ext_resource type="Texture2D" uid="uid://dqmnnpw22w052" path="res://Assets/AllSkyFree_Sky_ColdSunset_Equirect.png" id="1_3yc6q"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3g06i"]
+panorama = ExtResource("1_3yc6q")
 
 [resource]
-sky_material = SubResource("ProceduralSkyMaterial_v6c48")
+sky_material = SubResource("PanoramaSkyMaterial_3g06i")

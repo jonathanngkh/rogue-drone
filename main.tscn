@@ -1,15 +1,23 @@
-[gd_scene load_steps=9 format=3 uid="uid://klmy6w8lxao1"]
+[gd_scene load_steps=11 format=3 uid="uid://klmy6w8lxao1"]
 
-[ext_resource type="Sky" uid="uid://b5d0f7g6xkjqy" path="res://Assets/pink vaporwave sky.tres" id="1_0cnhs"]
 [ext_resource type="PackedScene" uid="uid://cuhjk0ppis5lw" path="res://Drone/drone.tscn" id="1_8pc8o"]
+[ext_resource type="Texture2D" uid="uid://dqmnnpw22w052" path="res://Assets/AllSkyFree_Sky_ColdSunset_Equirect.png" id="1_14ghb"]
 [ext_resource type="PackedScene" uid="uid://d00t470eitu0l" path="res://multi_mesh_instance_3d.tscn" id="2_r4yd5"]
 [ext_resource type="PackedScene" uid="uid://b3vmxt3w4nf3c" path="res://Bullseye/bullseye.tscn" id="4_ookdc"]
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_i6rlq"]
+panorama = ExtResource("1_14ghb")
+
+[sub_resource type="Sky" id="Sky_v3x50"]
+sky_material = SubResource("PanoramaSkyMaterial_i6rlq")
+
 [sub_resource type="Environment" id="Environment_c3jo3"]
 background_mode = 2
-sky = ExtResource("1_0cnhs")
+sky = SubResource("Sky_v3x50")
 tonemap_mode = 2
 glow_enabled = true
+fog_light_color = Color(0.261952, 0.28694, 0.326222, 1)
+adjustment_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_snua2"]
 size = Vector3(60, 2, 60)

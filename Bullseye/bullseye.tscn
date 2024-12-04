@@ -21,6 +21,7 @@ emission_energy_multiplier = 16.0
 [node name="Bullseye" type="RigidBody3D"]
 collision_layer = 3
 collision_mask = 3
+mass = 1000.0
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 10

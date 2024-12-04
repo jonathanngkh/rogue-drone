@@ -3,7 +3,7 @@ extends CharacterBody3D
 @onready var drone_animation_player: AnimationPlayer = $"Pivot/drone edited origins/DroneAnimationPlayer"
 @onready var bullet_scene: PackedScene = preload("res://Bullet/bullet.tscn") # Bullet scene
 
-@export var bullet_speed = 50.0 # Bullet speed
+@export var bullet_speed = 100.0 # Bullet speed
 @export var max_thrust = 60.0 # Maximum upward force (throttle)
 @export var drag_coefficient = 0.1 # Adjust this value to tune drag intensity
 @export var angular_drag_coefficient = 0.1 # Adjust this to tune angular drag intensity
