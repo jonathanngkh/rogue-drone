@@ -5,21 +5,29 @@ extends CharacterBody3D
 @onready var ray_cast: RayCast3D = $Node3D/Camera3D/RayCast3D
 @onready var fpv_camera: Camera3D = $Node3D/Camera3D
 @onready var laser: MeshInstance3D = $Scaler/Laser
+@onready var engine_sound: AudioStreamPlayer3D = $EngineSound
+@onready var hit_marker_sound: AudioStreamPlayer3D = $HitMarkerSound
+
 
 @export var zoom_sensitivity_multiplier: float = 0.5 # Reduce sensitivity to 50% while zoomed in
 @export var bullet_speed = 100.0 # Bullet speed
 @export var max_thrust = 60.0 # Maximum upward force (throttle)
+@export var max_yaw_speed = 6.0 # Maximum rotational speed for yaw
+@export var max_pitch_speed = 5.0 # Maximum rotational speed for pitch
+@export var max_roll_speed = 5.0 # Maximum rotational speed for roll
+@export var friction_coefficient = 10 # Adjust this value to tune the friction intensity
 @export var drag_coefficient = 0.1 # Adjust this value to tune drag intensity
 @export var angular_drag_coefficient = 0.1 # Adjust this to tune angular drag intensity
-@export var max_yaw_speed = 6.0 # Maximum rotational speed for yaw
-@export var max_pitch_speed = 3.0 # Maximum rotational speed for pitch
-@export var max_roll_speed = 3.0 # Maximum rotational speed for roll
-@export var friction_coefficient = 10 # Adjust this value to tune the friction intensity
 @export var default_fov: float = 90.0  # Normal field of view
 @export var zoom_fov: float = 30.0     # Zoomed-in field of view
 @export var zoom_speed: float = 10.0   # How fast the zoom transitions
+# Export pitch range for tuning
+@export var min_pitch = 1.0  # Pitch at zero throttle
+@export var max_pitch = 1.7  # Pitch at full throttle
+@export var min_volume = -15  # Volume (dB) at zero throttle
+@export var max_volume = 0  # Volume (dB) at full throttle
 
-# Add variables to track angular velocities
+# Variables to track angular velocities
 var pitch_velocity: float = 0.0
 var yaw_velocity: float = 0.0
 var roll_velocity: float = 0.0
@@ -71,6 +79,7 @@ func _physics_process(delta: float) -> void:
 	# Apply thrust
 	apply_thrust(throttle_input, delta)
 	
+	
 	# Apply angular drag to reduce angular velocities
 	apply_angular_drag(delta)
 	
@@ -92,9 +101,14 @@ func _physics_process(delta: float) -> void:
 	# Apply pitch
 	apply_pitch(pitch_input, delta)
 	
+	# Adjust engine sound based on throttle input
+	update_engine_sound(throttle_input, yaw_input, pitch_input, roll_input)
+	
+
 	# Play animation
 	drone_animation_player.play("throttle_forward")
 	drone_animation_player.speed_scale = 2 + throttle_input * 3
+	# add yaw,pitch,roll animations also
 
 	# Move using built-in velocity
 	move_and_slide()
@@ -204,3 +218,21 @@ func shoot_laser() -> void:
 		if ray_cast.get_collider().is_in_group("bullseye"):
 			print('laser hit')
 			ray_cast.get_collider().hit_by_bullet()
+			hit_marker_sound.play()
+
+
+func update_engine_sound(throttle_input: float, yaw_input: float, pitch_input: float, roll_input: float) -> void:
+	# Calculate pitch and volume based on throttle
+	pitch_input = abs(pitch_input)
+	yaw_input = abs(yaw_input)
+	roll_input = abs(roll_input)
+	var pitch = lerp(min_pitch, max_pitch, throttle_input * 1.2+(yaw_input/2)+(pitch_input/2)+(roll_input/2))
+	var volume = lerp(min_volume, max_volume, throttle_input*1.2+(yaw_input/2)+(pitch_input/2)+(roll_input/2))
+
+	# Apply pitch and volume to the engine sound
+	engine_sound.pitch_scale = pitch
+	engine_sound.volume_db = volume
+
+	# Start the engine sound if not already playing
+	if not engine_sound.playing:
+		engine_sound.play()
