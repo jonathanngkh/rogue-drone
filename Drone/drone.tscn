@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuhjk0ppis5lw"]
+[gd_scene load_steps=6 format=3 uid="uid://cuhjk0ppis5lw"]
 
 [ext_resource type="Script" path="res://Drone/drone2.gd" id="1_wyx1r"]
 [ext_resource type="PackedScene" uid="uid://diqrec1hr4dkb" path="res://Drone/drone_edited_origins.tscn" id="2_mm684"]
@@ -6,6 +6,19 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_4gnq5"]
 height = 0.15
 radius = 0.25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kymmf"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0)
+emission_enabled = true
+emission = Color(0, 1, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jqjw2"]
+material = SubResource("StandardMaterial3D_kymmf")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 6.15
 
 [node name="Drone" type="CharacterBody3D"]
 script = ExtResource("1_wyx1r")
@@ -23,12 +36,23 @@ shape = SubResource("CylinderShape3D_4gnq5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.137798, 0.0156304)
 
 [node name="Camera3D" type="Camera3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 0.984, -0.178167, 0, 0.178167, 0.984, 0.000795484, 1.80606, -0.241343)
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0.000795484, 1.56928, -0.241343)
 current = true
 fov = 90.0
+
+[node name="RayCast3D" type="RayCast3D" parent="Node3D/Camera3D"]
+target_position = Vector3(0, 0, -1000)
+collision_mask = 2
 
 [node name="Camera3D2" type="Camera3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 0.945302, 0.326195, 0, -0.326195, 0.945302, 0.000795484, 0.234622, 0.453062)
 fov = 90.0
+
+[node name="Scaler" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0.000795484, 1.70708, -0.225713)
+
+[node name="Laser" type="MeshInstance3D" parent="Scaler"]
+transform = Transform3D(1, 0, 0, 0, 0.239364, 0.97093, 0, -0.97093, 0.239364, 0, -0.74196, -1.91917)
+mesh = SubResource("CylinderMesh_jqjw2")
 
 [editable path="Pivot/drone edited origins"]

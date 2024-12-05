@@ -2,6 +2,10 @@ extends CharacterBody3D
 
 @onready var drone_animation_player: AnimationPlayer = $"Pivot/drone edited origins/DroneAnimationPlayer"
 @onready var bullet_scene: PackedScene = preload("res://Bullet/bullet.tscn") # Bullet scene
+@onready var ray_cast: RayCast3D = $Node3D/Camera3D/RayCast3D
+@onready var fpv_camera: Camera3D = $Node3D/Camera3D
+@onready var laser: MeshInstance3D = $Scaler/Laser
+
 
 @export var bullet_speed = 100.0 # Bullet speed
 @export var max_thrust = 60.0 # Maximum upward force (throttle)
@@ -11,17 +15,34 @@ extends CharacterBody3D
 @export var max_pitch_speed = 3.0 # Maximum rotational speed for pitch
 @export var max_roll_speed = 3.0 # Maximum rotational speed for roll
 @export var friction_coefficient = 10 # Adjust this value to tune the friction intensity
-
+@export var default_fov: float = 75.0  # Normal field of view
+@export var zoom_fov: float = 30.0     # Zoomed-in field of view
+@export var zoom_speed: float = 10.0   # How fast the zoom transitions
 
 # Add variables to track angular velocities
 var pitch_velocity: float = 0.0
 var yaw_velocity: float = 0.0
 var roll_velocity: float = 0.0
 
+
 func _physics_process(delta: float) -> void:
+	# Handle ADS
+	if Input.is_action_pressed("aim_down_sights"): # Check if L1 is held
+		fpv_camera.fov = lerp(fpv_camera.fov, zoom_fov, zoom_speed * delta)
+	else:
+		fpv_camera.fov = lerp(fpv_camera.fov, default_fov, zoom_speed * delta)
 	# Handle shooting with R1 button (gamepad button)
 	if Input.is_action_pressed("shoot"):
-		shoot_bullet()
+		#shoot_bullet()
+		shoot_laser()
+		laser.get_active_material(0).albedo_color.a = 1.0
+
+	if Input.is_action_just_released("shoot"):
+		var laser_material = laser.get_active_material(0)
+		var tween = create_tween()
+		tween.tween_property(laser_material, "albedo_color:a", 0.0, 0.2).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+		
+		#laser.visible = false
 
 	# Add the gravity.
 	if not is_on_floor():
@@ -160,4 +181,12 @@ func shoot_bullet() -> void:
 	bullet.global_transform.origin = transform.origin - 3*transform.basis.z  # Position in front of the drone
 	bullet.rotation_degrees = transform.basis.get_euler() # Match the drone's rotation
 	bullet.apply_impulse(-transform.basis.z * bullet_speed + velocity, Vector3.ZERO)
+
+
+func shoot_laser() -> void:
+	laser.visible = true
 	
+	if ray_cast.is_colliding():
+		if ray_cast.get_collider().is_in_group("bullseye"):
+			print('laser hit')
+			ray_cast.get_collider().hit_by_bullet()
