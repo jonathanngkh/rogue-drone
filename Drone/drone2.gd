@@ -7,14 +7,18 @@ extends CharacterBody3D
 @onready var laser: MeshInstance3D = $Scaler/Laser
 @onready var engine_sound: AudioStreamPlayer3D = $EngineSound
 @onready var hit_marker_sound: AudioStreamPlayer3D = $HitMarkerSound
+@onready var laser_sound: AudioStreamPlayer3D = $LaserSound
+@onready var laser_hum_sound: AudioStreamPlayer3D = $LaserHumSound
+@onready var crosshair: TextureRect = $"../HUD/Crosshair"
+@onready var hitmarker: TextureRect = $"../HUD/Hitmarker"
 
 
 @export var zoom_sensitivity_multiplier: float = 0.5 # Reduce sensitivity to 50% while zoomed in
 @export var bullet_speed = 100.0 # Bullet speed
 @export var max_thrust = 60.0 # Maximum upward force (throttle)
-@export var max_yaw_speed = 6.0 # Maximum rotational speed for yaw
-@export var max_pitch_speed = 5.0 # Maximum rotational speed for pitch
-@export var max_roll_speed = 5.0 # Maximum rotational speed for roll
+@export var max_yaw_speed = 5.0 # Maximum rotational speed for yaw
+@export var max_pitch_speed = 3.0 # Maximum rotational speed for pitch
+@export var max_roll_speed = 3.0 # Maximum rotational speed for roll
 @export var friction_coefficient = 10 # Adjust this value to tune the friction intensity
 @export var drag_coefficient = 0.1 # Adjust this value to tune drag intensity
 @export var angular_drag_coefficient = 0.1 # Adjust this to tune angular drag intensity
@@ -24,8 +28,8 @@ extends CharacterBody3D
 # Export pitch range for tuning
 @export var min_pitch = 1.0  # Pitch at zero throttle
 @export var max_pitch = 1.7  # Pitch at full throttle
-@export var min_volume = -15  # Volume (dB) at zero throttle
-@export var max_volume = 0  # Volume (dB) at full throttle
+@export var min_volume = -25  # Volume (dB) at zero throttle
+@export var max_volume = -5  # Volume (dB) at full throttle
 
 # Variables to track angular velocities
 var pitch_velocity: float = 0.0
@@ -40,6 +44,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("aim_down_sights"): # Check if L1 is held
 		is_ADS = true
 		fpv_camera.fov = lerp(fpv_camera.fov, zoom_fov, zoom_speed * delta)
+		
 	else:
 		fpv_camera.fov = lerp(fpv_camera.fov, default_fov, zoom_speed * delta)
 	
@@ -52,7 +57,9 @@ func _physics_process(delta: float) -> void:
 		max_pitch_speed *= 1/zoom_sensitivity_multiplier
 		max_roll_speed *= 1/zoom_sensitivity_multiplier
 		max_yaw_speed *= 1/zoom_sensitivity_multiplier
-
+	if Input.is_action_just_pressed("shoot"):
+		laser_sound.play()
+		laser_hum_sound.play()
 	# Handle shooting with R1 button (gamepad button)
 	if Input.is_action_pressed("shoot"):
 		#shoot_bullet()
@@ -60,9 +67,11 @@ func _physics_process(delta: float) -> void:
 		laser.get_active_material(0).albedo_color.a = 1.0
 
 	if Input.is_action_just_released("shoot"):
+		laser_sound.stop()
+		laser_hum_sound.stop()
 		var laser_material = laser.get_active_material(0)
 		var tween = create_tween()
-		tween.tween_property(laser_material, "albedo_color:a", 0.0, 0.2).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(laser_material, "albedo_color:a", 0.0, 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 		
 		#laser.visible = false
 
@@ -212,13 +221,16 @@ func shoot_bullet() -> void:
 
 
 func shoot_laser() -> void:
-	laser.visible = true
-	
 	if ray_cast.is_colliding():
 		if ray_cast.get_collider().is_in_group("bullseye"):
 			print('laser hit')
 			ray_cast.get_collider().hit_by_bullet()
-			hit_marker_sound.play()
+			var tween = create_tween()
+			tween.tween_property(crosshair, "self_modulate", Color("ffffff"), 0.2 ).from(Color("ff0000"))
+			var tween_diagonal = create_tween()
+			tween_diagonal.tween_property(hitmarker, "self_modulate", Color("ffffff00"), 0.2 ).from(Color("ff0000"))
+			if not hit_marker_sound.is_playing():
+				hit_marker_sound.play()
 
 
 func update_engine_sound(throttle_input: float, yaw_input: float, pitch_input: float, roll_input: float) -> void:
