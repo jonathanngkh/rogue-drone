@@ -6,7 +6,7 @@ extends CharacterBody3D
 @onready var fpv_camera: Camera3D = $Node3D/Camera3D
 @onready var laser: MeshInstance3D = $Scaler/Laser
 
-
+@export var zoom_sensitivity_multiplier: float = 0.5 # Reduce sensitivity to 50% while zoomed in
 @export var bullet_speed = 100.0 # Bullet speed
 @export var max_thrust = 60.0 # Maximum upward force (throttle)
 @export var drag_coefficient = 0.1 # Adjust this value to tune drag intensity
@@ -15,7 +15,7 @@ extends CharacterBody3D
 @export var max_pitch_speed = 3.0 # Maximum rotational speed for pitch
 @export var max_roll_speed = 3.0 # Maximum rotational speed for roll
 @export var friction_coefficient = 10 # Adjust this value to tune the friction intensity
-@export var default_fov: float = 75.0  # Normal field of view
+@export var default_fov: float = 90.0  # Normal field of view
 @export var zoom_fov: float = 30.0     # Zoomed-in field of view
 @export var zoom_speed: float = 10.0   # How fast the zoom transitions
 
@@ -24,13 +24,27 @@ var pitch_velocity: float = 0.0
 var yaw_velocity: float = 0.0
 var roll_velocity: float = 0.0
 
+var is_ADS : bool = false
+
 
 func _physics_process(delta: float) -> void:
 	# Handle ADS
 	if Input.is_action_pressed("aim_down_sights"): # Check if L1 is held
+		is_ADS = true
 		fpv_camera.fov = lerp(fpv_camera.fov, zoom_fov, zoom_speed * delta)
 	else:
 		fpv_camera.fov = lerp(fpv_camera.fov, default_fov, zoom_speed * delta)
+	
+	if Input.is_action_just_pressed("aim_down_sights"):
+		max_pitch_speed *= zoom_sensitivity_multiplier
+		max_roll_speed *= zoom_sensitivity_multiplier
+		max_yaw_speed *= zoom_sensitivity_multiplier
+	if Input.is_action_just_released("aim_down_sights"):
+		is_ADS = false
+		max_pitch_speed *= 1/zoom_sensitivity_multiplier
+		max_roll_speed *= 1/zoom_sensitivity_multiplier
+		max_yaw_speed *= 1/zoom_sensitivity_multiplier
+
 	# Handle shooting with R1 button (gamepad button)
 	if Input.is_action_pressed("shoot"):
 		#shoot_bullet()
@@ -50,15 +64,15 @@ func _physics_process(delta: float) -> void:
 	else:
 		apply_friction(delta)
 		reset_orientation_to_neutral() # can use this for ez hover
-		
+	
 	# Get throttle input (left stick Y-axis)
 	var throttle_input = Input.get_action_strength("throttle_forward")
 	
-	# Apply angular drag to reduce angular velocities
-	apply_angular_drag(delta)
-	
 	# Apply thrust
 	apply_thrust(throttle_input, delta)
+	
+	# Apply angular drag to reduce angular velocities
+	apply_angular_drag(delta)
 	
 	# Get yaw input (left stick X-axis)
 	var yaw_input = Input.get_action_strength("yaw_left") - Input.get_action_strength("yaw_right")
