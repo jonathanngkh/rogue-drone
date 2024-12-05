@@ -13,7 +13,7 @@ extends CharacterBody3D
 @onready var hitmarker: TextureRect = $"../HUD/Hitmarker"
 
 
-@export var zoom_sensitivity_multiplier: float = 0.5 # Reduce sensitivity to 50% while zoomed in
+@export var zoom_sensitivity_multiplier: float = 0.3 # Reduce sensitivity to 50% while zoomed in
 @export var bullet_speed = 100.0 # Bullet speed
 @export var max_thrust = 60.0 # Maximum upward force (throttle)
 @export var max_yaw_speed = 5.0 # Maximum rotational speed for yaw
@@ -23,8 +23,8 @@ extends CharacterBody3D
 @export var drag_coefficient = 0.1 # Adjust this value to tune drag intensity
 @export var angular_drag_coefficient = 0.1 # Adjust this to tune angular drag intensity
 @export var default_fov: float = 90.0  # Normal field of view
-@export var zoom_fov: float = 30.0     # Zoomed-in field of view
-@export var zoom_speed: float = 10.0   # How fast the zoom transitions
+@export var zoom_fov: float = 20.0     # Zoomed-in field of view
+@export var zoom_speed: float = 15.0   # How fast the zoom transitions
 # Export pitch range for tuning
 @export var min_pitch = 1.0  # Pitch at zero throttle
 @export var max_pitch = 1.7  # Pitch at full throttle

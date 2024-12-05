@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b3vmxt3w4nf3c"]
 
-[ext_resource type="PackedScene" uid="uid://bi4ea2iodapgy" path="res://Assets/targetA.glb" id="1_73ff1"]
 [ext_resource type="Script" path="res://Bullseye/bullseye.gd" id="1_n0qxb"]
+[ext_resource type="PackedScene" uid="uid://8ktro2e3r0rq" path="res://Bullseye/bullseye_mesh.tscn" id="3_fi3so"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_fnxqb"]
 height = 0.771
@@ -18,17 +18,13 @@ emission_enabled = true
 emission = Color(1.53056e-05, 0.880157, 7.70092e-07, 1)
 emission_energy_multiplier = 16.0
 
-[node name="Bullseye" type="RigidBody3D"]
+[node name="Bullseye" type="CharacterBody3D"]
 collision_layer = 3
 collision_mask = 3
-mass = 1000.0
-gravity_scale = 0.0
-contact_monitor = true
-max_contacts_reported = 10
 script = ExtResource("1_n0qxb")
 
-[node name="TargetA2" parent="." instance=ExtResource("1_73ff1")]
-transform = Transform3D(-4.37114e-07, 0, -10, 0, 10, 0, 10, 0, -4.37114e-07, 0, 0, 0)
+[node name="targetA2" parent="." instance=ExtResource("3_fi3so")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
