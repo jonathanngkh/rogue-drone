@@ -141,6 +141,33 @@ _data = {
 
 [node name="drone edited origins" instance=ExtResource("1_gsbay")]
 
+[node name="node_id167" parent="root/node_id273/node_id118" index="24"]
+visible = false
+
+[node name="node_id169" parent="root/node_id273/node_id118" index="25"]
+visible = false
+
+[node name="node_id171" parent="root/node_id273/node_id118" index="26"]
+visible = false
+
+[node name="node_id173" parent="root/node_id273/node_id118" index="27"]
+visible = false
+
+[node name="node_id175" parent="root/node_id273/node_id118" index="28"]
+visible = false
+
+[node name="node_id177" parent="root/node_id273/node_id118" index="29"]
+visible = false
+
+[node name="node_id179" parent="root/node_id273/node_id118" index="30"]
+visible = false
+
+[node name="node_id181" parent="root/node_id273/node_id118" index="31"]
+visible = false
+
+[node name="node_id183" parent="root/node_id273/node_id118" index="32"]
+visible = false
+
 [node name="DroneAnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_b8y64")
