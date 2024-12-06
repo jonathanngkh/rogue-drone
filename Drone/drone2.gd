@@ -13,19 +13,24 @@ extends CharacterBody3D
 @onready var hitmarker: TextureRect = $"../HUD/Hitmarker"
 
 
-@export var zoom_sensitivity_multiplier: float = 0.3 # Reduce sensitivity to 50% while zoomed in
 @export var bullet_speed = 100.0 # Bullet speed
-@export var max_thrust = 60.0 # Maximum upward force (throttle)
+
+@export var ramp_factor: float = 3.0 # Exponent for the exponential ramp
+@export var max_thrust = 100.0 # Maximum upward force (throttle)
 @export var max_yaw_speed = 5.0 # Maximum rotational speed for yaw
 @export var max_pitch_speed = 3.0 # Maximum rotational speed for pitch
 @export var max_roll_speed = 3.0 # Maximum rotational speed for roll
+
 @export var friction_coefficient = 10 # Adjust this value to tune the friction intensity
 @export var drag_coefficient = 0.1 # Adjust this value to tune drag intensity
 @export var angular_drag_coefficient = 0.1 # Adjust this to tune angular drag intensity
+
+@export var zoom_sensitivity_multiplier: float = 0.3 # Reduce sensitivity to 50% while zoomed in
 @export var default_fov: float = 90.0  # Normal field of view
 @export var zoom_fov: float = 20.0     # Zoomed-in field of view
 @export var zoom_speed: float = 15.0   # How fast the zoom transitions
-# Export pitch range for tuning
+
+# Pitch/Volume range for engine whine
 @export var min_pitch = 1.0  # Pitch at zero throttle
 @export var max_pitch = 1.7  # Pitch at full throttle
 @export var min_volume = -25  # Volume (dB) at zero throttle
@@ -36,13 +41,10 @@ var pitch_velocity: float = 0.0
 var yaw_velocity: float = 0.0
 var roll_velocity: float = 0.0
 
-var is_ADS : bool = false
-
 
 func _physics_process(delta: float) -> void:
 	# Handle ADS
 	if Input.is_action_pressed("aim_down_sights"): # Check if L1 is held
-		is_ADS = true
 		fpv_camera.fov = lerp(fpv_camera.fov, zoom_fov, zoom_speed * delta)
 		
 	else:
@@ -53,7 +55,6 @@ func _physics_process(delta: float) -> void:
 		max_roll_speed *= zoom_sensitivity_multiplier
 		max_yaw_speed *= zoom_sensitivity_multiplier
 	if Input.is_action_just_released("aim_down_sights"):
-		is_ADS = false
 		max_pitch_speed *= 1/zoom_sensitivity_multiplier
 		max_roll_speed *= 1/zoom_sensitivity_multiplier
 		max_yaw_speed *= 1/zoom_sensitivity_multiplier
@@ -123,7 +124,14 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+func apply_exponential_ramp(input_value: float) -> float:
+	# Apply the exponential curve: input^ramp_factor
+	return sign(input_value) * pow(abs(input_value), ramp_factor)
+
 func apply_thrust(throttle_input: float, delta: float) -> void:
+	print("pre ramp value: " + str(throttle_input))
+	throttle_input = apply_exponential_ramp(throttle_input)
+	print("post ramp value: " + str(throttle_input))
 	# Get the thrust direction (normal to the drone's plane)
 	var thrust_direction = transform.basis.y.normalized() # Local "up" direction relative to the drone
 
@@ -146,12 +154,14 @@ func apply_drag(delta: float) -> void:
 
 # Apply yaw rotation
 func apply_yaw(yaw_input: float, delta: float) -> void:
+	yaw_input = apply_exponential_ramp(yaw_input)
 	# Apply yaw rotation around the Y-axis (horizontal plane)
 	yaw_velocity = yaw_input * max_yaw_speed * delta
 	rotate_object_local(Vector3(0, 1, 0), yaw_velocity)
 
  # Apply pitch rotation and thrust
 func apply_pitch(pitch_input: float, delta: float) -> void:
+	pitch_input = apply_exponential_ramp(pitch_input)
 	# Apply pitch rotation around the drone's local X-axis
 	pitch_velocity = pitch_input * max_pitch_speed * delta
 	
@@ -160,6 +170,7 @@ func apply_pitch(pitch_input: float, delta: float) -> void:
 
 
 func apply_roll(roll_input: float, delta: float) -> void:
+	roll_input = apply_exponential_ramp(roll_input)
 	# Apply roll rotation around the drone's local Z-axis
 	roll_velocity = roll_input * max_roll_speed * delta
 	
@@ -235,9 +246,14 @@ func shoot_laser() -> void:
 
 func update_engine_sound(throttle_input: float, yaw_input: float, pitch_input: float, roll_input: float) -> void:
 	# Calculate pitch and volume based on throttle
-	pitch_input = abs(pitch_input)
-	yaw_input = abs(yaw_input)
-	roll_input = abs(roll_input)
+	#pitch_input = abs(pitch_input)
+	#yaw_input = abs(yaw_input)
+	#roll_input = abs(roll_input)
+	
+	pitch_input = apply_exponential_ramp(abs(pitch_input))
+	yaw_input = apply_exponential_ramp(abs(yaw_input))
+	roll_input = apply_exponential_ramp(abs(roll_input))
+	throttle_input = apply_exponential_ramp(throttle_input)
 	var pitch = lerp(min_pitch, max_pitch, throttle_input * 1.2+(yaw_input/2)+(pitch_input/2)+(roll_input/2))
 	var volume = lerp(min_volume, max_volume, throttle_input*1.2+(yaw_input/2)+(pitch_input/2)+(roll_input/2))
 
