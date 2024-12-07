@@ -26,15 +26,16 @@ extends CharacterBody3D
 @export var drag_coefficient = 0.1 # Adjust this value to tune drag intensity
 @export var angular_drag_coefficient = 0.1 # Adjust this to tune angular drag intensity
 
-@export var zoom_sensitivity_multiplier: float = 0.3 # Reduce sensitivity to 50% while zoomed in
+ # Reduce sensitivity to 50% while zoomed in
+@export var zoom_sensitivity_multiplier: float = 0.3
 @export var default_fov: float = 60.0  # Normal field of view
 @export var zoom_fov: float = 20.0     # Zoomed-in field of view
 @export var zoom_speed: float = 15.0   # How fast the zoom transitions
 
 # Pitch/Volume range for engine whine
-@export var min_pitch = 1.0  # Pitch at zero throttle
-@export var max_pitch = 1.7  # Pitch at full throttle
-@export var min_volume = -25  # Volume (dB) at zero throttle
+@export var min_pitch = 0.9  # Pitch at zero throttle
+@export var max_pitch = 1.4  # Pitch at full throttle
+@export var min_volume = -10  # Volume (dB) at zero throttle
 @export var max_volume = -5  # Volume (dB) at full throttle
 
 # Variables to track angular velocities
@@ -43,57 +44,55 @@ var yaw_velocity: float = 0.0
 var roll_velocity: float = 0.0
 
 var device_index : int
-var string_test : String = ""
+var string_p2 : String = ""
 
 func _ready() -> void:
-	Input.stop_joy_vibration(device_index)
 	laser.get_active_material(0).albedo_color.a = 0.0
 	if name == "Drone":
 		device_index = 0
 	elif name == "DroneP2":
 		device_index = 1
-		string_test = "_p2"
-	
-	print('device index: ' + str(device_index) + 'stringtest: ' + string_test)
+		string_p2 = "_p2"
+	Input.stop_joy_vibration(device_index)
 
 
 func _physics_process(delta: float) -> void:
 	# Handle ADS
 	#if device_index == 0:
 	# Get throttle input (left stick Y-axis)
-	var throttle_input = Input.get_action_strength("throttle_forward" + string_test)
+	var throttle_input = Input.get_action_strength("throttle_forward" + string_p2)
 	# Get pitch input (right stick Y-axis)
-	var pitch_input = Input.get_action_strength("pitch_backward" + string_test) - Input.get_action_strength("pitch_forward" + string_test)
+	var pitch_input = Input.get_action_strength("pitch_backward" + string_p2) - Input.get_action_strength("pitch_forward" + string_p2)
 	# Get roll input (right stick X-axis)
-	var roll_input = Input.get_action_strength("roll_left" + string_test) - Input.get_action_strength("roll_right" + string_test)
+	var roll_input = Input.get_action_strength("roll_left" + string_p2) - Input.get_action_strength("roll_right" + string_p2)
 	# Get yaw input (left stick X-axis)
-	var yaw_input = Input.get_action_strength("yaw_left" + string_test) - Input.get_action_strength("yaw_right" + string_test)
+	var yaw_input = Input.get_action_strength("yaw_left" + string_p2) - Input.get_action_strength("yaw_right" + string_p2)
 	
-	if Input.is_action_pressed("aim_down_sights" + string_test): # Check if L1 is held
+	if Input.is_action_pressed("aim_down_sights" + string_p2): # Check if L1 is held
 		fpv_camera.fov = lerp(fpv_camera.fov, zoom_fov, zoom_speed * delta)
 	else:
 		fpv_camera.fov = lerp(fpv_camera.fov, default_fov, zoom_speed * delta)
 	
-	if Input.is_action_just_pressed("aim_down_sights" + string_test):
+	if Input.is_action_just_pressed("aim_down_sights" + string_p2):
 		max_pitch_speed *= zoom_sensitivity_multiplier
 		max_roll_speed *= zoom_sensitivity_multiplier
 		max_yaw_speed *= zoom_sensitivity_multiplier
 		
-	if Input.is_action_just_released("aim_down_sights" + string_test):
+	if Input.is_action_just_released("aim_down_sights" + string_p2):
 		max_pitch_speed *= 1/zoom_sensitivity_multiplier
 		max_roll_speed *= 1/zoom_sensitivity_multiplier
 		max_yaw_speed *= 1/zoom_sensitivity_multiplier
 		
-	if Input.is_action_just_pressed("shoot" + string_test):
+	if Input.is_action_just_pressed("shoot" + string_p2):
 		laser_sound.play()
 		laser_hum_sound.play()
 		
-	if Input.is_action_pressed("shoot" + string_test):
+	if Input.is_action_pressed("shoot" + string_p2):
 		#shoot_bullet()
 		shoot_laser()
 		laser.get_active_material(0).albedo_color.a = 1.0
 
-	if Input.is_action_just_released("shoot" + string_test):
+	if Input.is_action_just_released("shoot" + string_p2):
 		laser_sound.stop()
 		laser_hum_sound.stop()
 		var laser_material = laser.get_active_material(0)

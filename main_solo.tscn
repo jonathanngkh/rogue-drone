@@ -1,0 +1,173 @@
+[gd_scene load_steps=14 format=3 uid="uid://iwk42u2v65pd"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_gv4va"]
+[ext_resource type="Texture2D" uid="uid://dqmnnpw22w052" path="res://Assets/AllSkyFree_Sky_ColdSunset_Equirect.png" id="2_kqpay"]
+[ext_resource type="PackedScene" uid="uid://d00t470eitu0l" path="res://multi_mesh_instance_3d.tscn" id="3_ajyb0"]
+[ext_resource type="Texture2D" uid="uid://bu5hx1a8i3dya" path="res://Assets/Crosshair_03.png" id="4_xvy3y"]
+[ext_resource type="Texture2D" uid="uid://b6au1bo44uycy" path="res://Assets/Crosshair_03_diagonal.png" id="5_g7cv1"]
+[ext_resource type="PackedScene" uid="uid://b3vmxt3w4nf3c" path="res://Bullseye/bullseye.tscn" id="6_7s5qq"]
+[ext_resource type="PackedScene" uid="uid://cuhjk0ppis5lw" path="res://Drone/drone.tscn" id="7_dvil5"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_i6rlq"]
+panorama = ExtResource("2_kqpay")
+
+[sub_resource type="Sky" id="Sky_v3x50"]
+sky_material = SubResource("PanoramaSkyMaterial_i6rlq")
+
+[sub_resource type="Environment" id="Environment_c3jo3"]
+background_mode = 2
+sky = SubResource("Sky_v3x50")
+tonemap_mode = 2
+glow_enabled = true
+fog_light_color = Color(0.261952, 0.28694, 0.326222, 1)
+adjustment_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_snua2"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lj1c0"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_40ff4"]
+albedo_color = Color(0, 0.258824, 0.0196078, 1)
+metallic = 0.91
+
+[node name="MainSolo" type="Node"]
+script = ExtResource("1_gv4va")
+metadata/_edit_vertical_guides_ = [720.0]
+metadata/_edit_horizontal_guides_ = [450.0]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.497092, 0.0538781, 0, 0.107754, 0.994177, -0.500003, 0.860981, -0.0933177, 26.8537, 46.7052, -36.3338)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_c3jo3")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_snua2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_lj1c0")
+surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
+
+[node name="MultiMeshInstance3D" parent="Ground" instance=ExtResource("3_ajyb0")]
+transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
+visible = false
+
+[node name="Ground2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.8243, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground2"]
+shape = SubResource("BoxShape3D_snua2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground2"]
+mesh = SubResource("BoxMesh_lj1c0")
+surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
+
+[node name="MultiMeshInstance3D" parent="Ground2" instance=ExtResource("3_ajyb0")]
+transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
+visible = false
+
+[node name="Ground3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 56.7928)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground3"]
+shape = SubResource("BoxShape3D_snua2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground3"]
+mesh = SubResource("BoxMesh_lj1c0")
+surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
+
+[node name="MultiMeshInstance3D" parent="Ground3" instance=ExtResource("3_ajyb0")]
+transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
+visible = false
+
+[node name="Ground4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.8243, -1, 56.7928)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground4"]
+shape = SubResource("BoxShape3D_snua2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground4"]
+mesh = SubResource("BoxMesh_lj1c0")
+surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
+
+[node name="MultiMeshInstance3D" parent="Ground4" instance=ExtResource("3_ajyb0")]
+transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
+visible = false
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.732472, 0.680798, 0, -0.680798, 0.732472, -19.0982, 70.2005, 89.8036)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.997549, 0.0699659, 0, -0.0699659, 0.997549, 0.865623, 2.2826, 7.48893)
+size = 10.0
+
+[node name="HUD2" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Crosshair" type="TextureRect" parent="HUD2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -33.0
+offset_right = 33.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_xvy3y")
+expand_mode = 1
+
+[node name="Hitmarker" type="TextureRect" parent="HUD2"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -33.0
+offset_right = 33.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_g7cv1")
+expand_mode = 1
+
+[node name="BullseyeScaler" type="Node3D" parent="."]
+transform = Transform3D(-10, 0, 1.50996e-06, 0, 10, 0, -1.50996e-06, 0, -10, -54.6376, 45.7475, -7.62939e-06)
+
+[node name="Bullseye" parent="BullseyeScaler" instance=ExtResource("6_7s5qq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.86246)
+
+[node name="BullseyeScaler2" type="Node3D" parent="."]
+transform = Transform3D(-5, 0, 7.54979e-07, 0, 5, 0, -7.54979e-07, 0, -5, -14.4929, 25.5137, 39.4589)
+
+[node name="Bullseye" parent="BullseyeScaler2" instance=ExtResource("6_7s5qq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.52399, 0, 2.08629)
+
+[node name="BullseyeScaler3" type="Node3D" parent="."]
+transform = Transform3D(-2.5, 0, 3.77489e-07, 0, 2.5, 0, -3.77489e-07, 0, -2.5, -66.796, 15.1457, 35.9496)
+
+[node name="Bullseye" parent="BullseyeScaler3" instance=ExtResource("6_7s5qq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3507)
+
+[node name="BullseyeScaler4" type="Node3D" parent="."]
+transform = Transform3D(-1.25, 0, 1.88745e-07, 0, 1.25, 0, -1.88745e-07, 0, -1.25, -87.4225, 52.6578, 22.1065)
+
+[node name="Bullseye" parent="BullseyeScaler4" instance=ExtResource("6_7s5qq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3507)
+
+[node name="DroneScaler" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.986, 1.017, 64.5958)
+
+[node name="Drone" parent="DroneScaler" instance=ExtResource("7_dvil5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.91821e-05, 0.000239998, 0.000205994)
+floor_block_on_wall = false
