@@ -5,6 +5,8 @@ extends CharacterBody3D
 @onready var ray_cast: RayCast3D = $Node3D/Camera3D/RayCast3D
 @onready var fpv_camera: Camera3D = $Node3D/Camera3D
 @onready var laser: MeshInstance3D = $Scaler/Laser
+@onready var identifier_laser: MeshInstance3D = $IdentifierLaserScaler/IdentifierLaser
+
 @onready var engine_sound: AudioStreamPlayer = $EngineSound
 @onready var hit_marker_sound: AudioStreamPlayer = $HitMarkerSound
 @onready var laser_sound: AudioStreamPlayer = $LaserSound
@@ -48,6 +50,7 @@ var string_p2 : String = ""
 
 func _ready() -> void:
 	laser.get_active_material(0).albedo_color.a = 0.0
+	#identifier_laser.get_active_material(0).albedo_color.a = 0.0
 	if name == "Drone":
 		device_index = 0
 	elif name == "DroneP2":
@@ -91,6 +94,7 @@ func _physics_process(delta: float) -> void:
 		#shoot_bullet()
 		shoot_laser()
 		laser.get_active_material(0).albedo_color.a = 1.0
+		identifier_laser.get_active_material(0).albedo_color.a = 1.0
 
 	if Input.is_action_just_released("shoot" + string_p2):
 		laser_sound.stop()
@@ -98,6 +102,9 @@ func _physics_process(delta: float) -> void:
 		var laser_material = laser.get_active_material(0)
 		var tween = create_tween()
 		tween.tween_property(laser_material, "albedo_color:a", 0.0, 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+		var identifier_laser_material = identifier_laser.get_active_material(0)
+		var tween2 = create_tween()
+		tween2.tween_property(identifier_laser_material, "albedo_color:a", 0.0, 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 
 	# Add the gravity.
 	if not is_on_floor():
