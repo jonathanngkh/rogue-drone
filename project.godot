@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="Rogue Drone"
-run/main_scene="res://main.tscn"
+run/main_scene="res://main_networking.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[debug]
+
+file_logging/enable_file_logging=true
+file_logging/main_scene="res://main_networking.tscn"
 
 [display]
 
@@ -144,3 +149,4 @@ aim_down_sights_p2={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
