@@ -86,42 +86,42 @@ aim_down_sights={
 ]
 }
 yaw_left_p2={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":0,"axis_value":-1.0,"script":null)
 ]
 }
 yaw_right_p2={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":0,"axis_value":1.0,"script":null)
 ]
 }
 throttle_forward_p2={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":1,"axis_value":-1.0,"script":null)
 ]
 }
 throttle_backward_p2={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":1,"axis_value":1.0,"script":null)
 ]
 }
 roll_left_p2={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":2,"axis_value":-1.0,"script":null)
 ]
 }
 roll_right_p2={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":2,"axis_value":1.0,"script":null)
 ]
 }
 pitch_forward_p2={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":3,"axis_value":-1.0,"script":null)
 ]
 }
 pitch_backward_p2={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":3,"axis_value":1.0,"script":null)
 ]
 }

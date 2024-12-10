@@ -1,10 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://iwk42u2v65pd"]
+[gd_scene load_steps=12 format=3 uid="uid://iwk42u2v65pd"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gv4va"]
 [ext_resource type="Texture2D" uid="uid://dqmnnpw22w052" path="res://Assets/AllSkyFree_Sky_ColdSunset_Equirect.png" id="2_kqpay"]
 [ext_resource type="PackedScene" uid="uid://d00t470eitu0l" path="res://multi_mesh_instance_3d.tscn" id="3_ajyb0"]
-[ext_resource type="Texture2D" uid="uid://bu5hx1a8i3dya" path="res://Assets/Crosshair_03.png" id="4_xvy3y"]
-[ext_resource type="Texture2D" uid="uid://b6au1bo44uycy" path="res://Assets/Crosshair_03_diagonal.png" id="5_g7cv1"]
 [ext_resource type="PackedScene" uid="uid://b3vmxt3w4nf3c" path="res://Bullseye/bullseye.tscn" id="6_7s5qq"]
 [ext_resource type="PackedScene" uid="uid://cuhjk0ppis5lw" path="res://Drone/drone.tscn" id="7_dvil5"]
 
@@ -106,40 +104,6 @@ transform = Transform3D(1, 0, 0, 0, 0.732472, 0.680798, 0, -0.680798, 0.732472, 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.997549, 0.0699659, 0, -0.0699659, 0.997549, 0.865623, 2.2826, 7.48893)
 size = 10.0
-
-[node name="HUD2" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="Crosshair" type="TextureRect" parent="HUD2"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = -33.0
-offset_right = 33.0
-offset_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_xvy3y")
-expand_mode = 1
-
-[node name="Hitmarker" type="TextureRect" parent="HUD2"]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = -33.0
-offset_right = 33.0
-offset_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_g7cv1")
-expand_mode = 1
 
 [node name="BullseyeScaler" type="Node3D" parent="."]
 transform = Transform3D(-10, 0, 1.50996e-06, 0, 10, 0, -1.50996e-06, 0, -10, -54.6376, 45.7475, -7.62939e-06)

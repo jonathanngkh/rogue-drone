@@ -248,14 +248,20 @@ func shoot_bullet() -> void:
 
 func shoot_laser() -> void:
 	if ray_cast.is_colliding():
-		if ray_cast.get_collider().is_in_group("bullseye") or ray_cast.get_collider().is_in_group("player"):
-			var tween = create_tween()
-			tween.tween_property(crosshair, "self_modulate", Color("ffffff"), 0.2 ).from(Color("ff0000"))
-			var tween_diagonal = create_tween()
-			tween_diagonal.tween_property(hitmarker, "self_modulate", Color("ffffff00"), 0.2 ).from(Color("ff0000"))
+		var collider = ray_cast.get_collider()
+		if collider == self:
+			return
+		if collider.is_in_group("bullseye") or collider.is_in_group("player"):
+			animate_hitmarker()
 			if not hit_marker_sound.is_playing():
 				hit_marker_sound.play()
-				ray_cast.get_collider().hit_by_bullet()
+				collider.hit_by_bullet()
+
+func animate_hitmarker() -> void:
+	var tween = create_tween()
+	tween.tween_property(crosshair, "self_modulate", Color("ffffff"), 0.2 ).from(Color("ff0000"))
+	var tween_diagonal = create_tween()
+	tween_diagonal.tween_property(hitmarker, "self_modulate", Color("ffffff00"), 0.2 ).from(Color("ff0000"))
 
 
 func update_engine_sound(throttle_input: float, yaw_input: float, pitch_input: float, roll_input: float) -> void:

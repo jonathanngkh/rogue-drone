@@ -1,12 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://klmy6w8lxao1"]
+[gd_scene load_steps=13 format=3 uid="uid://klmy6w8lxao1"]
 
 [ext_resource type="PackedScene" uid="uid://cuhjk0ppis5lw" path="res://Drone/drone.tscn" id="1_8pc8o"]
 [ext_resource type="Texture2D" uid="uid://dqmnnpw22w052" path="res://Assets/AllSkyFree_Sky_ColdSunset_Equirect.png" id="1_14ghb"]
 [ext_resource type="Script" path="res://main.gd" id="1_3586d"]
 [ext_resource type="PackedScene" uid="uid://d00t470eitu0l" path="res://multi_mesh_instance_3d.tscn" id="2_r4yd5"]
 [ext_resource type="PackedScene" uid="uid://b3vmxt3w4nf3c" path="res://Bullseye/bullseye.tscn" id="4_ookdc"]
-[ext_resource type="Texture2D" uid="uid://bu5hx1a8i3dya" path="res://Assets/Crosshair_03.png" id="5_nmbcb"]
-[ext_resource type="Texture2D" uid="uid://b6au1bo44uycy" path="res://Assets/Crosshair_03_diagonal.png" id="6_q6x5u"]
 [ext_resource type="PackedScene" uid="uid://j73w7siajnr" path="res://Drone/drone_p2.tscn" id="7_rlyfp"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_i6rlq"]
@@ -108,40 +106,6 @@ transform = Transform3D(1, 0, 0, 0, 0.732472, 0.680798, 0, -0.680798, 0.732472, 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.997549, 0.0699659, 0, -0.0699659, 0.997549, 0.865623, 2.2826, 7.48893)
 size = 10.0
-
-[node name="HUD2" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="Crosshair" type="TextureRect" parent="HUD2"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = -33.0
-offset_right = 33.0
-offset_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_nmbcb")
-expand_mode = 1
-
-[node name="Hitmarker" type="TextureRect" parent="HUD2"]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = -33.0
-offset_right = 33.0
-offset_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("6_q6x5u")
-expand_mode = 1
 
 [node name="BullseyeScaler" type="Node3D" parent="."]
 transform = Transform3D(-10, 0, 1.50996e-06, 0, 10, 0, -1.50996e-06, 0, -10, -54.6376, 45.7475, -7.62939e-06)
