@@ -1,8 +1,18 @@
 extends Node
 
 var connected_peers = []
+@export var ip_address := "127.0.0.1"
+#@export var ip_address := "192.168.1.117"
+@export var default_port := 7777
+
+@onready var start_server_button: Button = $StartServerButton
+@onready var connect_to_server_button: Button = $ConnectToServerButton
+@onready var terminate_networking_button: Button = $TerminateNetworkingButton
 
 func _ready():
+	start_server_button.button_up.connect(func() -> void: start_server())
+	connect_to_server_button.button_up.connect(func() -> void: connect_to_server(ip_address, default_port))
+	terminate_networking_button.button_up.connect(func() -> void: terminate_networking())
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.connected_to_server.connect(func() -> void: print('Signal: Client successfully connected to server'))

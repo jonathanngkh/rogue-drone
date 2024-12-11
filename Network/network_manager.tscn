@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgujg4dgmdpmg"]
+
+[ext_resource type="Script" path="res://Network/network_manager.gd" id="1_yvok8"]
+
+[node name="NetworkManager" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1440.0
+offset_bottom = 900.0
+script = ExtResource("1_yvok8")
+
+[node name="StartServerButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 31.0
+text = "Start Server"
+
+[node name="ConnectToServerButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 159.0
+offset_right = 308.0
+offset_bottom = 31.0
+text = "Connect To Server"
+
+[node name="TerminateNetworkingButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 353.0
+offset_right = 536.0
+offset_bottom = 31.0
+text = "Terminate Networking"

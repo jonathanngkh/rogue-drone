@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://iwk42u2v65pd"]
+[gd_scene load_steps=12 format=3 uid="uid://iwk42u2v65pd"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gv4va"]
 [ext_resource type="Texture2D" uid="uid://dqmnnpw22w052" path="res://Assets/AllSkyFree_Sky_ColdSunset_Equirect.png" id="2_kqpay"]
 [ext_resource type="PackedScene" uid="uid://d00t470eitu0l" path="res://multi_mesh_instance_3d.tscn" id="3_ajyb0"]
 [ext_resource type="PackedScene" uid="uid://b3vmxt3w4nf3c" path="res://Bullseye/bullseye.tscn" id="6_7s5qq"]
-[ext_resource type="Script" path="res://Network/network_manager.gd" id="6_yfsey"]
 [ext_resource type="PackedScene" uid="uid://cuhjk0ppis5lw" path="res://Drone/drone.tscn" id="7_dvil5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_i6rlq"]
@@ -55,7 +54,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
 
 [node name="MultiMeshInstance3D" parent="Ground" instance=ExtResource("3_ajyb0")]
 transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
-visible = false
 
 [node name="Ground2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.8243, -1, 0)
@@ -69,7 +67,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
 
 [node name="MultiMeshInstance3D" parent="Ground2" instance=ExtResource("3_ajyb0")]
 transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
-visible = false
 
 [node name="Ground3" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 56.7928)
@@ -83,7 +80,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
 
 [node name="MultiMeshInstance3D" parent="Ground3" instance=ExtResource("3_ajyb0")]
 transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
-visible = false
 
 [node name="Ground4" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.8243, -1, 56.7928)
@@ -97,7 +93,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_40ff4")
 
 [node name="MultiMeshInstance3D" parent="Ground4" instance=ExtResource("3_ajyb0")]
 transform = Transform3D(1.35, 0, 0, 0, 0.5, 0, 0, 0, 1.35, 0, 2.6709, 0)
-visible = false
 
 [node name="CameraPivot" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.732472, 0.680798, 0, -0.680798, 0.732472, -19.0982, 70.2005, 89.8036)
@@ -136,25 +131,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.986, 1.017, 64.5958)
 [node name="Drone" parent="DroneScaler" instance=ExtResource("7_dvil5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.91821e-05, 0.000239998, 0.000205994)
 floor_block_on_wall = false
-
-[node name="NetworkManager" type="Node" parent="."]
-script = ExtResource("6_yfsey")
-
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="StartServerButton" type="Button" parent="UI"]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Start Server"
-
-[node name="ConnectToServerButton" type="Button" parent="UI"]
-offset_left = 159.0
-offset_right = 308.0
-offset_bottom = 31.0
-text = "Connect To Server"
-
-[node name="TerminateNetworkingButton" type="Button" parent="UI"]
-offset_left = 353.0
-offset_right = 502.0
-offset_bottom = 31.0
-text = "Terminate Networking"

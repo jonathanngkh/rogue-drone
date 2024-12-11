@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://klmy6w8lxao1"]
+[gd_scene load_steps=13 format=3 uid="uid://klmy6w8lxao1"]
 
 [ext_resource type="PackedScene" uid="uid://cuhjk0ppis5lw" path="res://Drone/drone.tscn" id="1_8pc8o"]
 [ext_resource type="Texture2D" uid="uid://dqmnnpw22w052" path="res://Assets/AllSkyFree_Sky_ColdSunset_Equirect.png" id="1_14ghb"]
 [ext_resource type="Script" path="res://main.gd" id="1_3586d"]
 [ext_resource type="PackedScene" uid="uid://d00t470eitu0l" path="res://multi_mesh_instance_3d.tscn" id="2_r4yd5"]
 [ext_resource type="PackedScene" uid="uid://b3vmxt3w4nf3c" path="res://Bullseye/bullseye.tscn" id="4_ookdc"]
-[ext_resource type="Script" path="res://Network/network_manager.gd" id="7_gis3j"]
 [ext_resource type="PackedScene" uid="uid://j73w7siajnr" path="res://Drone/drone_p2.tscn" id="7_rlyfp"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_i6rlq"]
@@ -16,7 +15,6 @@ sky_material = SubResource("PanoramaSkyMaterial_i6rlq")
 
 [sub_resource type="Environment" id="Environment_c3jo3"]
 background_mode = 2
-background_energy_multiplier = 0.8
 sky = SubResource("Sky_v3x50")
 tonemap_mode = 2
 glow_enabled = true
@@ -175,25 +173,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.986, 1.017, -8.43764)
 
 [node name="DroneP2" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("7_rlyfp")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -34.986, 1.017, -8.438)
-
-[node name="NetworkManager" type="Node" parent="."]
-script = ExtResource("7_gis3j")
-
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="StartServerButton" type="Button" parent="UI"]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Start Server"
-
-[node name="ConnectToServerButton" type="Button" parent="UI"]
-offset_left = 159.0
-offset_right = 308.0
-offset_bottom = 31.0
-text = "Connect To Server"
-
-[node name="TerminateNetworkingButton" type="Button" parent="UI"]
-offset_left = 353.0
-offset_right = 502.0
-offset_bottom = 31.0
-text = "Terminate Networking"
