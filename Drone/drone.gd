@@ -49,6 +49,7 @@ var device_index : int
 var string_p2 : String = ""
 
 func _ready() -> void:
+	add_to_group("player")
 	laser.get_active_material(0).albedo_color.a = 0.0
 	#identifier_laser.get_active_material(0).albedo_color.a = 0.0
 	if name == "Drone":

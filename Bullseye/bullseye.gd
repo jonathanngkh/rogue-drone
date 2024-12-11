@@ -9,15 +9,19 @@ func _ready() -> void:
 	# Add the target to a group called "bullseye" to detect collisions
 	add_to_group("bullseye")
 	#mouse_entered.connect(func() -> void: print('hit'))
-	player = get_tree().get_first_node_in_group('player')
+	if player:
+		player = get_tree().get_first_node_in_group('player')
 
 
 func _process(_delta: float) -> void:
 	# Get the position of the player
-	var player_position = player.global_transform.origin
+	var player_position
+	if player:
+		if player.is_in_group("player"):
+			player_position = player.global_transform.origin
 	
 	# Make the bullseye face the player by setting its look_at
-	look_at(player_position)
+		look_at(player_position)
 	
 	
 	

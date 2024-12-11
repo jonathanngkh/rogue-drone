@@ -15,6 +15,10 @@ run/main_scene="res://main_networking.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameManager="*res://Network/game_manager.gd"
+
 [debug]
 
 file_logging/enable_file_logging=true
@@ -28,6 +32,7 @@ window/size/viewport_height=900
 [global_group]
 
 player=""
+spawn_point=""
 
 [input]
 
