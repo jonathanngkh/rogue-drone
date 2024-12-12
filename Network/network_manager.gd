@@ -92,6 +92,7 @@ func Send_Player_Info(username, id) -> void:
 	if not GameManager.Players_Dict.has(id):
 		GameManager.Players_Dict[id] = {
 			"username": username,
+			"id": id
 		}
 		
 	# pass the info on to all client-players
