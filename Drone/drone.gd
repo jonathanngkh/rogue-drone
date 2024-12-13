@@ -59,12 +59,15 @@ func _ready() -> void:
 		string_p2 = "_p2"
 	Input.stop_joy_vibration(device_index)
 	$MultiplayerSynchronizer.set_multiplayer_authority(name.to_int())
-	print("%s multi auth is %s" % [name, multiplayer.get_unique_id()])
+	print("%s multi auth is %s" % [name, $MultiplayerSynchronizer.get_multiplayer_authority()])
+	fpv_camera.current = false
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		fpv_camera.current = true
 
 
 func _physics_process(delta: float) -> void:
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() or owner.name != "MainNetworking":
-	#if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	#if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() or owner.name != "MainNetworking":
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		if Input.is_action_just_pressed("debug"):
 			print('device index: %s' % device_index)
 		# Handle ADS
