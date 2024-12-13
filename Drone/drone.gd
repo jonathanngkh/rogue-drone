@@ -6,7 +6,7 @@ extends CharacterBody3D
 @onready var fpv_camera: Camera3D = $Node3D/Camera3D
 @onready var laser: MeshInstance3D = $Scaler/Laser
 @onready var identifier_laser: MeshInstance3D = $IdentifierLaserScaler/IdentifierLaser
-
+@onready var you_died_overlay: TextureRect = $HUD/YouDied
 @onready var engine_sound: AudioStreamPlayer = $EngineSound
 @onready var hit_marker_sound: AudioStreamPlayer = $HitMarkerSound
 @onready var laser_sound: AudioStreamPlayer = $LaserSound
@@ -70,6 +70,10 @@ func _physics_process(delta: float) -> void:
 	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		if Input.is_action_just_pressed("debug"):
 			print('device index: %s' % device_index)
+			print("muid: " + str(multiplayer.get_unique_id()))
+			print("name: " + name)
+			print("msync mu auth: " + str($MultiplayerSynchronizer.get_multiplayer_authority()))
+			print('youdied owner: ' + you_died_overlay.owner.name)
 		# Handle ADS
 		#if device_index == 0:
 		# Get throttle input (left stick Y-axis)
@@ -255,10 +259,12 @@ func shoot_bullet() -> void:
 	bullet.rotation_degrees = transform.basis.get_euler() # Match the drone's rotation
 	bullet.apply_impulse(-transform.basis.z * bullet_speed + velocity, Vector3.ZERO)
 
-
+# need to move to rpc call, determined by server.
+# should just send input. this code would then move to server, and it would also have arguments for who is shooting and who was shot
 func shoot_laser() -> void:
 	if ray_cast.is_colliding():
 		var collider = ray_cast.get_collider()
+		print(str(multiplayer.get_unique_id()) + " shot " + str(collider))
 		if collider == self:
 			return
 		if collider.is_in_group("bullseye") or collider.is_in_group("player"):
@@ -296,6 +302,7 @@ func update_engine_sound(throttle_input: float, yaw_input: float, pitch_input: f
 		engine_sound.play()
 
 func hit_by_bullet() -> void:
+	print(name + " was hit by bullet()")
 	for mesh in red_indicator.get_children():
 		var mesh_surface_override = mesh.get_surface_override_material(0)
 		var tween = create_tween()
@@ -305,6 +312,14 @@ func hit_by_bullet() -> void:
 		
 	if health > 0:
 		health -= 1
+		print(name + "'s health was reduced by 1")
 	
-	if health <= 0:
-		$HUD/YouDied.visible = true
+		if health <= 0:
+			#you_died_overlay.visible = true
+			#print(name + " died")
+			death()
+
+func death() -> void:
+	you_died_overlay.self_modulate.a = 1
+	#you_died_overlay.visible = true
+	print(name + " died")
