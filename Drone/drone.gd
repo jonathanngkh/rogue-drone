@@ -63,6 +63,10 @@ func _ready() -> void:
 	fpv_camera.current = false
 	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		fpv_camera.current = true
+	else:
+		$HUD.visible = false
+		
+		
 
 
 func _physics_process(delta: float) -> void:
@@ -315,11 +319,11 @@ func hit_by_bullet() -> void:
 		print(name + "'s health was reduced by 1")
 	
 		if health <= 0:
-			#you_died_overlay.visible = true
+			self.you_died_overlay.visible = true
 			#print(name + " died")
 			death()
 
 func death() -> void:
-	you_died_overlay.self_modulate.a = 1
-	#you_died_overlay.visible = true
+	#you_died_overlay.self_modulate.a = 1
+	you_died_overlay.visible = true
 	print(name + " died")

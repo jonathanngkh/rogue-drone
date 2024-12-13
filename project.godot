@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Rogue Drone"
-run/main_scene="res://main_solo.tscn"
+run/main_scene="res://Network/network_manager.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 

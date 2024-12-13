@@ -15,7 +15,10 @@ extends Node
 
 
 func _ready():
-	start_server_button.button_up.connect(func() -> void: start_server())
+	start_server_button.button_up.connect(func() -> void:
+		start_server()
+		# add self to Players_Dict
+		Send_Player_Info(username_form.text, multiplayer.get_unique_id()))
 	connect_to_server_button.button_up.connect(func() -> void: connect_to_server(ip_address, default_port))
 	start_game_button.button_up.connect(func() -> void: Start_Game.rpc())
 	terminate_networking_button.button_up.connect(func() -> void: terminate_networking())
@@ -26,6 +29,8 @@ func _ready():
 		connected_label.visible = true
 		print('Signal: Client successfully connected to server')) # Called only from clients
 	multiplayer.connection_failed.connect(func() -> void: print('Signal: Client failed to connect to server'))
+	if "--server" in OS.get_cmdline_args():
+		start_server()
 
 
 # Server setup
@@ -38,8 +43,6 @@ func start_server(port: int = 7777):
 	multiplayer.multiplayer_peer = peer
 	print("Server started on port %d" % port)
 	server_started_label.visible = true
-	# add self to Players_Dict
-	Send_Player_Info(username_form.text, multiplayer.get_unique_id())
 
 
 # Client setup
