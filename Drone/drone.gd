@@ -70,6 +70,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	$HUD/FPS.text = "FPS: " + str(Engine.get_frames_per_second())
 	#if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() or owner.name != "MainNetworking":
 	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		if Input.is_action_just_pressed("debug"):
