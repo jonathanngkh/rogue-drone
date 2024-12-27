@@ -69,7 +69,7 @@ func terminate_networking() -> void:
 # Signals for connections. Called on Server and Client
 func _on_peer_connected(id: int):
 	pass
-	#print("Player connected with ID: %d (Is server: %s)" % [multiplayer.get_unique_id(), multiplayer.is_server()])
+	print("Player connected with ID: %d (Is server: %s)" % [id, multiplayer.is_server()])
 	#print("Player connected with ID: %d (Is server: %s)" % [id, multiplayer.is_server()])
 	#connected_peers.append(id)
 	#print("Connected peers: %s" % str(connected_peers))
@@ -77,7 +77,7 @@ func _on_peer_connected(id: int):
 
 func _on_peer_disconnected(id: int):
 	pass
-	#print("Player disconnected with ID: %d (Is server: %s)" % [multiplayer.get_unique_id(), multiplayer.is_server()])
+	print("Player disconnected with ID: %d (Is server: %s)" % [multiplayer.get_unique_id(), multiplayer.is_server()])
 	#print("Player disconnected with ID: %d (Is server: %s)" % [id, multiplayer.is_server()])
 	#connected_peers.erase(id)
 	#print("Connected peers: %s" % str(connected_peers))
